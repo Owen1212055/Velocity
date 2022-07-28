@@ -25,9 +25,18 @@ import io.netty.buffer.ByteBuf;
 
 public class PlayerChatCompletion implements MinecraftPacket {
 
+  public static final String[] EMPTY_COMPLETIONS = new String[0];
+
   private String[] completions;
   private Action action;
 
+  public PlayerChatCompletion() {
+  }
+
+  public PlayerChatCompletion(String[] completions, Action action) {
+    this.completions = completions;
+    this.action = action;
+  }
 
   public String[] getCompletions() {
     return completions;
@@ -62,7 +71,7 @@ public class PlayerChatCompletion implements MinecraftPacket {
     return handler.handle(this);
   }
 
-  enum Action {
+  public enum Action {
     ADD,
     REMOVE,
     ALTER

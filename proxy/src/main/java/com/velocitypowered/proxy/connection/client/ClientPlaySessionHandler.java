@@ -19,6 +19,7 @@ package com.velocitypowered.proxy.connection.client;
 
 import static com.velocitypowered.api.network.ProtocolVersion.MINECRAFT_1_13;
 import static com.velocitypowered.api.network.ProtocolVersion.MINECRAFT_1_16;
+import static com.velocitypowered.api.network.ProtocolVersion.MINECRAFT_1_19;
 import static com.velocitypowered.api.network.ProtocolVersion.MINECRAFT_1_8;
 import static com.velocitypowered.proxy.protocol.util.PluginMessageUtil.constructChannelsPacket;
 
@@ -57,10 +58,7 @@ import com.velocitypowered.proxy.protocol.packet.Respawn;
 import com.velocitypowered.proxy.protocol.packet.TabCompleteRequest;
 import com.velocitypowered.proxy.protocol.packet.TabCompleteResponse;
 import com.velocitypowered.proxy.protocol.packet.TabCompleteResponse.Offer;
-import com.velocitypowered.proxy.protocol.packet.chat.ChatBuilder;
-import com.velocitypowered.proxy.protocol.packet.chat.LegacyChat;
-import com.velocitypowered.proxy.protocol.packet.chat.PlayerChat;
-import com.velocitypowered.proxy.protocol.packet.chat.PlayerCommand;
+import com.velocitypowered.proxy.protocol.packet.chat.*;
 import com.velocitypowered.proxy.protocol.packet.title.GenericTitlePacket;
 import com.velocitypowered.proxy.protocol.util.PluginMessageUtil;
 import com.velocitypowered.proxy.util.CharacterUtil;
@@ -536,6 +534,11 @@ public class ClientPlaySessionHandler implements MinecraftSessionHandler {
       player.getConnection().delayedWrite(GenericTitlePacket.constructTitlePacket(
           GenericTitlePacket.ActionType.RESET, player.getProtocolVersion()));
     }
+    // Clear custom auto completions
+    if (player.getProtocolVersion().compareTo(MINECRAFT_1_19) >= 0) {
+      player.getConnection().delayedWrite(new PlayerChatCompletion(PlayerChatCompletion.EMPTY_COMPLETIONS, PlayerChatCompletion.Action.ALTER));
+    }
+
 
     // Flush everything
     player.getConnection().flush();
