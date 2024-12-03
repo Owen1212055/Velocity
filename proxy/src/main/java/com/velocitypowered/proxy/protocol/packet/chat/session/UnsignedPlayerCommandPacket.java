@@ -17,6 +17,7 @@
 
 package com.velocitypowered.proxy.protocol.packet.chat.session;
 
+import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.proxy.protocol.ProtocolUtils;
 import com.velocitypowered.proxy.protocol.packet.chat.LastSeenMessages;
@@ -45,8 +46,8 @@ public class UnsignedPlayerCommandPacket extends SessionPlayerCommandPacket {
   }
 
   @Override
-  public boolean unsignedSource() {
-    return true;
+  public CommandExecuteEvent.SignedState getEventSignedState() {
+    return CommandExecuteEvent.SignedState.UNSIGNED;
   }
 
   @Override

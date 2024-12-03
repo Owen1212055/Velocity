@@ -18,6 +18,7 @@
 package com.velocitypowered.proxy.protocol.packet.chat.session;
 
 import com.google.common.collect.Lists;
+import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.proxy.connection.MinecraftSessionHandler;
 import com.velocitypowered.proxy.protocol.MinecraftPacket;
@@ -68,8 +69,8 @@ public class SessionPlayerCommandPacket implements MinecraftPacket {
     return !argumentSignatures.isEmpty();
   }
 
-  public boolean unsignedSource() {
-    return false;
+  public CommandExecuteEvent.SignedState getEventSignedState() {
+    return !this.argumentSignatures.isEmpty() ? CommandExecuteEvent.SignedState.SIGNED_WITH_ARGS : CommandExecuteEvent.SignedState.SIGNED_WITHOUT_ARGS;
   }
 
   @Override
