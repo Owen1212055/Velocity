@@ -119,17 +119,16 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
   public enum SignedState {
     /**
      * Indicates that the command was executed from a signed source with signed message arguments,
-     * such as a player's direct input (e.g., typing a command in chat with signed arguments).
+     * This is currently only possible by typing a command in chat with signed arguments.
      *
      * <p><b>Note:</b> Cancelling the {@link CommandExecuteEvent} in this state will result in the player being kicked.</p>
      *
      * @since 3.4.0
      */
     SIGNED_WITH_ARGS,
-
     /**
-     * Indicates that the command was executed from a signed source without signed message arguments,
-     * such as a player's direct input (e.g., typing a command in chat without any signed arguments).
+     * Indicates that the command was executed from an unsigned source with no signed message arguments,
+     * This is currently only possible by typing a command in chat.
      *
      * @since 3.4.0
      */
