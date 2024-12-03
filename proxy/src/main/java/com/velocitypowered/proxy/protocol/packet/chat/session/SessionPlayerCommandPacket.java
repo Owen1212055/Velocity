@@ -68,6 +68,10 @@ public class SessionPlayerCommandPacket implements MinecraftPacket {
     return !argumentSignatures.isEmpty();
   }
 
+  public boolean unsignedSource() {
+    return false;
+  }
+
   @Override
   public boolean handle(MinecraftSessionHandler handler) {
     return handler.handle(this);

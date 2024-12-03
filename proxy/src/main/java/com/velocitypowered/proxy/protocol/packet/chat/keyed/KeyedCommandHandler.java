@@ -111,6 +111,6 @@ public class KeyedCommandHandler implements CommandHandler<KeyedPlayerCommandPac
         }
         return null;
       });
-    }, packet.getCommand(), packet.getTimestamp(), null);
+    }, packet.getCommand(), packet.getTimestamp(), null, CommandExecuteEvent.InvocationSource.UNKNOWN);
   }
 }

@@ -117,6 +117,6 @@ public class SessionCommandHandler implements CommandHandler<SessionPlayerComman
         }
         return forwardCommand(fixedPacket, commandToRun);
       });
-    }, packet.command, packet.timeStamp, packet.lastSeenMessages);
+    }, packet.command, packet.timeStamp, packet.lastSeenMessages, packet.unsignedSource() ? CommandExecuteEvent.InvocationSource.UNSIGNED : CommandExecuteEvent.InvocationSource.SIGNED);
   }
 }

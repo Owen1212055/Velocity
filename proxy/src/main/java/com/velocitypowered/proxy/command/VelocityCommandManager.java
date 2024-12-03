@@ -221,10 +221,10 @@ public class VelocityCommandManager implements CommandManager {
    * @return the {@link CompletableFuture} of the event
    */
   public CompletableFuture<CommandExecuteEvent> callCommandEvent(final CommandSource source,
-      final String cmdLine) {
+      final String cmdLine, final CommandExecuteEvent.InvocationSource unsignedSource) {
     Preconditions.checkNotNull(source, "source");
     Preconditions.checkNotNull(cmdLine, "cmdLine");
-    return eventManager.fire(new CommandExecuteEvent(source, cmdLine));
+    return eventManager.fire(new CommandExecuteEvent(source, cmdLine, unsignedSource));
   }
 
   private boolean executeImmediately0(final CommandSource source, final ParseResults<CommandSource> parsed) {
@@ -266,7 +266,7 @@ public class VelocityCommandManager implements CommandManager {
     Preconditions.checkNotNull(source, "source");
     Preconditions.checkNotNull(cmdLine, "cmdLine");
 
-    return callCommandEvent(source, cmdLine).thenComposeAsync(event -> {
+    return callCommandEvent(source, cmdLine, CommandExecuteEvent.InvocationSource.API).thenComposeAsync(event -> {
       CommandExecuteEvent.CommandResult commandResult = event.getResult();
       if (commandResult.isForwardToServer() || !commandResult.isAllowed()) {
         return CompletableFuture.completedFuture(false);

@@ -56,8 +56,9 @@ public interface CommandHandler<T extends MinecraftPacket> {
 
   default void queueCommandResult(VelocityServer server, ConnectedPlayer player,
       BiFunction<CommandExecuteEvent, LastSeenMessages, CompletableFuture<MinecraftPacket>> futurePacketCreator,
-      String message, Instant timestamp, @Nullable LastSeenMessages lastSeenMessages) {
-      CompletableFuture<CommandExecuteEvent> eventFuture = server.getCommandManager().callCommandEvent(player, message);
+      String message, Instant timestamp, @Nullable LastSeenMessages lastSeenMessages, CommandExecuteEvent.InvocationSource invocationSource) {
+      CompletableFuture<CommandExecuteEvent> eventFuture = server.getCommandManager().callCommandEvent(player, message,
+              invocationSource);
       player.getChatQueue().queuePacket(
         newLastSeenMessages -> eventFuture
             .thenComposeAsync(event -> futurePacketCreator.apply(event, newLastSeenMessages))

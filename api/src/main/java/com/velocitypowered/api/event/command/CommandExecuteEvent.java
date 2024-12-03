@@ -26,6 +26,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
   private final CommandSource commandSource;
   private final String command;
   private CommandResult result;
+  private InvocationSource invocationSource;
 
   /**
    * Constructs a CommandExecuteEvent.
@@ -34,9 +35,21 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
    * @param command the command being executed without first slash
    */
   public CommandExecuteEvent(CommandSource commandSource, String command) {
+    this(commandSource, command, InvocationSource.API);
+  }
+
+  /**
+   * Constructs a CommandExecuteEvent.
+   *
+   * @param commandSource the source executing the command
+   * @param command the command being executed without first slash
+   * @param invocationSource the invocation source of this command
+   */
+  public CommandExecuteEvent(CommandSource commandSource, String command, InvocationSource invocationSource) {
     this.commandSource = Preconditions.checkNotNull(commandSource, "commandSource");
     this.command = Preconditions.checkNotNull(command, "command");
     this.result = CommandResult.allowed();
+    this.invocationSource = invocationSource;
   }
 
   /**
@@ -61,6 +74,16 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
     return command;
   }
 
+  /**
+   * Returns the source of the command invocation, indicating how the command was executed.
+   *
+   * @return invocation source
+   */
+  @NonNull
+  public InvocationSource getInvocationSource() {
+    return this.invocationSource;
+  }
+
   @Override
   public CommandResult getResult() {
     return result;
@@ -78,6 +101,34 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
         + ", command=" + command
         + ", result=" + result
         + '}';
+  }
+
+  /**
+   * Represents the source of a command invocation.
+   */
+  public enum InvocationSource {
+    /**
+     * Indicates that the command was executed from an signed source,
+     * such as a player's direct input (e.g., typing in chat).
+     */
+    SIGNED,
+    /**
+     * Indicates that the command was executed from an unsigned source,
+     * such as clicking a component with a {@link net.kyori.adventure.text.event.ClickEvent.Action#RUN_COMMAND}.
+     *
+     * <p>Sent by clients on 1.20.5+
+     */
+    UNSIGNED,
+    /**
+     * Indicates that the command was invoked programmatically via an API call.
+     */
+    API,
+    /**
+     * Indicates that the command was executed from an unknown source.
+     *
+     * <p>This is sent on command execution for pre 1.19.3 clients.
+     */
+    UNKNOWN
   }
 
   /**
