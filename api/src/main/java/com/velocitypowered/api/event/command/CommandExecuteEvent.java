@@ -26,7 +26,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
   private final CommandSource commandSource;
   private final String command;
   private CommandResult result;
-  private InvocationInfo invocationInfo
+  private InvocationInfo invocationInfo;
 
   /**
    * Constructs a CommandExecuteEvent.
@@ -49,7 +49,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
     this.commandSource = Preconditions.checkNotNull(commandSource, "commandSource");
     this.command = Preconditions.checkNotNull(command, "command");
     this.result = CommandResult.allowed();
-    this.invocationSource = invocationInfo;
+    this.invocationInfo = invocationInfo;
   }
 
   /**
@@ -81,7 +81,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
    * @return invocation info
    */
   public InvocationInfo getInvocationInfo() {
-    return this.invocationSource;
+    return this.invocationInfo;
   }
 
   @Override
