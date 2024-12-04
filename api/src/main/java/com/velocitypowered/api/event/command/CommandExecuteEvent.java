@@ -26,7 +26,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
   private final CommandSource commandSource;
   private final String command;
   private CommandResult result;
-  private InvocationInfo invocationSource;
+  private InvocationInfo invocationInfo
 
   /**
    * Constructs a CommandExecuteEvent.
