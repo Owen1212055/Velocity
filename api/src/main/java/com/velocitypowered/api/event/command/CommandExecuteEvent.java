@@ -78,7 +78,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
    * Returns the info of the command invocation.
    *
    * @since 3.4.0
-   * @return invocation source
+   * @return invocation info
    */
   public InvocationInfo getInvocationInfo() {
     return this.invocationSource;
