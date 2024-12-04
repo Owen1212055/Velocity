@@ -127,7 +127,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
      */
     SIGNED_WITH_ARGS,
     /**
-     * Indicates that the command was executed from an unsigned source with no signed message arguments,
+     * Indicates that the command was executed from an signed source with no signed message arguments,
      * This is currently only possible by typing a command in chat.
      *
      * @since 3.4.0
