@@ -49,7 +49,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
     this.commandSource = Preconditions.checkNotNull(commandSource, "commandSource");
     this.command = Preconditions.checkNotNull(command, "command");
     this.result = CommandResult.allowed();
-    this.invocationInfo = invocationInfo;
+    this.invocationInfo = Preconditions.checkNotNull(invocationInfo, "invocationInfo");
   }
 
   /**
@@ -122,30 +122,31 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
      * This is currently only possible by typing a command in chat with signed arguments.
      *
      * <p><b>Note:</b> Cancelling the {@link CommandExecuteEvent} in this state will result in the player being kicked.</p>
-     *
+     * Sent from players on: 1.19.3+
      * @since 3.4.0
      */
     SIGNED_WITH_ARGS,
     /**
      * Indicates that the command was executed from an signed source with no signed message arguments,
      * This is currently only possible by typing a command in chat.
+     * Sent from players on: 1.19.3-1.20.4
      *
+     * <p><b>Note:</b> Cancelling the {@link CommandExecuteEvent} in this state will result in the player being kicked.</p>
      * @since 3.4.0
      */
     SIGNED_WITHOUT_ARGS,
     /**
-     * Indicates that the command was executed from an unsigned source,
+     * Indicates that the command was executed from an unsigned source
      * such as clicking on a component with a {@link net.kyori.adventure.text.event.ClickEvent.Action#RUN_COMMAND}.
      *
-     * <p>Clients running version 1.20.5 or later will send this state.</p>
-     *
+     * <p><b>Note:</b> Clients on 1.20.5+ will send this rather than the {@link SignedState#SIGNED_WITHOUT_ARGS}.
      * @since 3.4.0
      */
     UNSIGNED,
     /**
      * Indicates that the command invocation does not support signing.
      *
-     * <p>This state is sent by clients running versions prior to 1.19.3.</p>
+     * <p>This state is sent by clients running versions prior to 1.19.</p>
      *
      * @since 3.4.0
      */
