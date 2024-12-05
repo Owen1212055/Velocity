@@ -146,7 +146,7 @@ public final class CommandExecuteEvent implements ResultedEvent<CommandResult> {
     /**
      * Indicates that the command invocation does not support signing.
      *
-     * <p>This state is sent by clients running versions prior to 1.19.</p>
+     * <p>This state is sent by clients running versions prior to 1.19.3</p>
      *
      * @since 3.4.0
      */
